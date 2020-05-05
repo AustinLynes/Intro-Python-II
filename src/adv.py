@@ -1,5 +1,7 @@
 from room import Room
+from player import Player
 
+import os
 # Declare all the rooms
 
 room = {
@@ -49,3 +51,104 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+commands = ("n", "s", "e", "w", "q")
+
+
+def clearScreen():
+    if os.name == "nt":
+        __ = os.system("cls")
+    else:
+        __ = os.system("clear")
+
+
+def command_to_dir(command):
+    str = ""
+
+    if command == "n":
+        str = "Move North"
+    elif command == "s":
+        str = "Move South"
+    elif command == "e":
+        str = "Move East"
+    elif command == "w":
+        str = "Move West"
+    elif command == "q":
+        str = "QUIT"
+
+    return str
+# start of program
+
+
+def main():
+    clearScreen()
+    # wether the program should continue
+    quit = False
+    # create the player and set him inside the outside room
+    player = Player("player", room['outside'])
+    # while i say to continue. do so...
+    global message
+    red = '\033[91m'
+    red_end = '\033[0m'
+    yellow = '\033[93m'
+    yellow_end = '\033[0m'
+    grey = '\033[90m'
+    grey_end = '\033[0m'
+
+    message = ""
+
+    while quit is False:
+        # cur_room name
+        print(f'{player.cur_room.name}\n')
+        # cur_room description
+
+        print(f'{player.cur_room.description}\n')
+        # my avalable commands
+        # [ N , E, S, W, Q]
+
+        print(f'------------------\n')
+
+        for i in range(len(commands)):
+            print(
+                f'{grey}> {yellow}{commands[i]}{yellow_end}{grey}:{grey_end} {command_to_dir(commands[i])}')
+
+        print('')
+        print(f'------------------\n')
+
+        if(message != ""):
+            print(f"{red}{message}{red_end}\n")
+
+        inp = input("Please Enter a Command:  \n").split(" ")
+
+        if inp[0] == "q":
+            quit = True
+
+        if command_to_dir(inp[0]) == "Move North":
+            message = ""
+            if hasattr(player.cur_room, "n_to"):
+                player.cur_room = player.cur_room.n_to
+            else:
+                message = "sorry cannot move North.. chose a different direction.."
+        if command_to_dir(inp[0]) == "Move South":
+            message = ""
+            if hasattr(player.cur_room, "s_to"):
+                player.cur_room = player.cur_room.s_to
+            else:
+                message = "sorry cannot move South.. chose a different direction.."
+        if command_to_dir(inp[0]) == "Move East":
+            message = ""
+            if hasattr(player.cur_room, "e_to"):
+                player.cur_room = player.cur_room.e_to
+            else:
+                message = "sorry cannot move East.. chose a different direction.."
+        if command_to_dir(inp[0]) == "Move West":
+            message = ""
+            if hasattr(player.cur_room, "w_to"):
+                player.cur_room = player.cur_room.w_to
+            else:
+                message = "sorry cannot move West.. chose a different direction.."
+            # clear my screen
+        clearScreen()
+
+
+main()
