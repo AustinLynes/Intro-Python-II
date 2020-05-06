@@ -3,11 +3,12 @@
 
 
 class Room:
-    def __init__(self, *args):
-        self.name = args[0]
-        self.description = args[1]
-        if len(args) > 2:
-            self.n_to = args[2]
-            self.s_to = args[3]
-            self.e_to = args[4]
-            self.w_to = args[5]
+    name = ""
+    description = ""
+    items = {}
+
+    def __init__(self, name, description, items, **kwargs):
+        self.name = name
+        self.description = description
+        self.items = items
+
