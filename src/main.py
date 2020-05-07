@@ -41,7 +41,7 @@ def main():
     # wether the program should continue
     # True triggers a quit
     # create the player and set him inside the outside room
-    player = Player(name="player", cur_room=rooms["outside"])
+    player = Player(name="player", cur_room=rooms["front-yard-0"])
     # while i say to continue. do so...
     quit = False
     inventory_open = False
@@ -218,7 +218,7 @@ def main():
             print(seperator('---\n'))
         # endregion
 
-        command =input(
+        command = input(
             f"{blue}Please Enter a Command{blue_end}:\n\n").split(" ")
 
         handle_commands(command, player)
